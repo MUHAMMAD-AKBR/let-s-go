@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
+	"github.com/MUHAMMAD-AKBR/let-s-go/routes"
 	"github.com/MUHAMMAD-AKBR/let-s-go/structure"
 )
 
@@ -15,4 +17,10 @@ func main() {
 
 	// to read that json we need to convert that into a string
 	fmt.Println(string(ton_of_bytes))
+
+	// ------ STARTING THE SERVER ------//
+	// settings up the http handler using the router package
+
+	http.HandleFunc("/", routes.GET)
+	http.ListenAndServe(":3000", nil)
 }
