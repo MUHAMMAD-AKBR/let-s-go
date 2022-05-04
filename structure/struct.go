@@ -12,10 +12,10 @@ type Data struct {
 	Type_product string
 }
 
-func (d *Data) Convert_to_json(thing *Data) []byte {
+func (d *Data) Convert_to_json(thing *Data) ([]byte, error) {
 	json, err := json.Marshal(*thing)
 	if err != nil {
-		fmt.Println("oops somthing wrong happended")
+		return nil, fmt.Errorf("error because %v", err)
 	}
-	return json
+	return json, nil
 }
