@@ -12,8 +12,8 @@ type Data struct {
 	Type_product string
 }
 
-func (d *Data) Convert_to_json(thing Data) []byte {
-	json, err := json.Marshal(thing)
+func (d *Data) Convert_to_json(thing *Data) []byte {
+	json, err := json.Marshal(*thing)
 	if err != nil {
 		fmt.Println("oops somthing wrong happended")
 	}
