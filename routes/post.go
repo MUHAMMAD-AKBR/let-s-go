@@ -8,7 +8,7 @@ import (
 	"github.com/MUHAMMAD-AKBR/let-s-go/structure"
 )
 
-func POST(w http.ResponseWriter, r *http.Request) {
+func POST(w http.ResponseWriter, r *http.Request) ([]byte, error) {
 	//  the struct that we want
 	newproduct := structure.Data{}
 	//  parse incoming request body
@@ -23,8 +23,8 @@ func POST(w http.ResponseWriter, r *http.Request) {
 	}
 	bytes, ok := newproduct.Convert_to_json(&newproduct)
 	if ok != nil {
-		fmt.Print(err)
+		return nil, fmt.Errorf("errro %v", ok)
 	}
-	fmt.Println(string(bytes))
+	return bytes, nil
 
 }

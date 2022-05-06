@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+
 	// ------ STARTING THE SERVER ------//
 	// settings up the http handler using the router package
 

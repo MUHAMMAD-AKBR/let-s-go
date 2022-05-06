@@ -12,8 +12,8 @@ type Data struct {
 	Type_product string
 }
 
-type __repo__ struct {
-	list_of_data []Data
+type Repo struct {
+	List_of_data []Data
 }
 
 func (d *Data) Convert_to_json(thing *Data) ([]byte, error) {
