@@ -12,6 +12,10 @@ type Data struct {
 	Type_product string
 }
 
+type __repo__ struct {
+	list_of_data []Data
+}
+
 func (d *Data) Convert_to_json(thing *Data) ([]byte, error) {
 	json, err := json.Marshal(*thing)
 	if err != nil {
