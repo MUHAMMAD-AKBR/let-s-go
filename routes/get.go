@@ -9,17 +9,9 @@ import (
 	"github.com/MUHAMMAD-AKBR/let-s-go/structure"
 )
 
-//repository := structure.Repo{
-//	List_of_data: []structure.Data{
-//		{Product_name: "mirror", Price: "30", Type_product: "housekeepings"},
-//		{Product_name: "blanket", Price: "10", Type_product: "housekeepings"},
-//			{Product_name: "pillow", Price: "20", Type_product: "housekeepings"},
-//	{Product_name: "bodypillow", Price: "25", Type_product: "housekeepings"},
-//	{Product_name: "usb", Price: "30", Type_product: "Electronics"},
-//},
-//}
+// list of struct we ar going to convert it into a list of json
 
-var repo = structure.Repo{
+var Struct_repo = structure.Repo{
 	List_of_data: []structure.Data{
 		{Product_name: "mirror", Price: "30", Type_product: "housekeepings"},
 		{Product_name: "blanket", Price: "10", Type_product: "housekeepings"},
@@ -29,14 +21,17 @@ var repo = structure.Repo{
 	},
 }
 
+// list of converted struct s into json
+var Json_repo = structure.Json_Repo{}
+
 func GET(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted)
-	for _, v := range repo.List_of_data {
-		data, err := v.Convert_to_json(&v)
+	for _, value := range Struct_repo.List_of_data {
+		jsonized, err := value.Convert_to_json(&value)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			panic(err)
+			fmt.Println("error cannot convert struct to json")
 		}
-		fmt.Fprintf(w, ",%v", string(data))
+		Json_repo.List_of_json = append(Json_repo.List_of_json, string(jsonized))
 	}
+	fmt.Fprintf(w, "Data: %v", Json_repo.List_of_json)
 }
