@@ -24,7 +24,7 @@ var Struct_repo = structure.Repo{
 // list of converted struct s into json
 var Json_repo = structure.Json_Repo{}
 
-func GET(w http.ResponseWriter, r *http.Request) {
+func GET(w http.ResponseWriter, r *http.Request) []string {
 	w.WriteHeader(http.StatusAccepted)
 	for _, value := range Struct_repo.List_of_data {
 		jsonized, err := value.Convert_to_json(&value)
@@ -33,5 +33,5 @@ func GET(w http.ResponseWriter, r *http.Request) {
 		}
 		Json_repo.List_of_json = append(Json_repo.List_of_json, string(jsonized))
 	}
-	fmt.Fprintf(w, "Data: %v", Json_repo.List_of_json)
+	return Json_repo.List_of_json
 }

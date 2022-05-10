@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	_ "strings"
 
 	"github.com/MUHAMMAD-AKBR/let-s-go/routes"
 )
@@ -16,8 +17,8 @@ func main() {
 		switch r.Method {
 		case "GET":
 			w.Header().Set("Content-type", "application/json")
-			routes.GET(w, r)
-			fmt.Printf("path: %v", r.URL.Path)
+			data := routes.GET(w, r)
+			fmt.Fprintln(w, data)
 		case "POST":
 			routes.POST(w, r)
 		case "PUT", "PATCH":
