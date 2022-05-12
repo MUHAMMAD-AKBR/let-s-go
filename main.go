@@ -29,5 +29,13 @@ func main() {
 
 	})
 
+	http.HandleFunc("/datas/", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case "GET":
+			w.Header().Set("Content-type", "application/json")
+
+		}
+	})
+
 	http.ListenAndServe(":3000", nil)
 }
