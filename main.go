@@ -21,12 +21,6 @@ func main() {
 			w.Header().Set("Content-type", "application/json")
 			data := routes.GET(w, r)
 			fmt.Fprintln(w, data)
-		case "POST":
-			routes.POST(w, r)
-		case "PUT", "PATCH":
-			fmt.Fprintf(w, "still working on it your request is PUT/PATCH")
-		case "DELETE":
-			fmt.Fprintln(w, "still working on it your request is DELETE")
 		}
 
 	})
@@ -45,6 +39,9 @@ func main() {
 			// marhsal it into json and get the data
 			byt, _ := json.Marshal(each)
 			fmt.Fprintln(w, string(byt))
+		case "POST":
+			data, _ := routes.POST(w, r)
+			fmt.Println(string(data))
 		}
 	})
 
