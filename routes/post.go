@@ -22,5 +22,5 @@ func POST(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	}
 	// it works the slice of struct updates before then it doesnt updates maybe becuase i use := instead of = because := means i declare a new variable rather than overwriting the variable
-	Struct_repo.List_of_data = append(Struct_repo.List_of_data, newproduct)
+	structure.Struct_repo.List_of_data = append(structure.Struct_repo.List_of_data, newproduct)
 }

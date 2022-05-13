@@ -43,7 +43,7 @@ func main() {
 		case "POST":
 			routes.POST(w, r)
 		case "PUT", "PATCH":
-			routes.PUT()
+			routes.PUT(r)
 		case "DELETE":
 			routes.DELETE(structure.Struct_repo.List_of_data, 2)
 		}
