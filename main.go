@@ -40,9 +40,13 @@ func main() {
 			byt, _ := json.Marshal(each)
 			fmt.Fprintln(w, string(byt))
 		case "POST":
-			data, _ := routes.POST(w, r)
-			fmt.Println(string(data))
+			routes.POST(w, r)
+		case "PUT", "PATCH":
+			routes.PUT()
+		case "DELETE":
+			routes.DELETE()
 		}
+
 	})
 
 	http.ListenAndServe(":3000", nil)
