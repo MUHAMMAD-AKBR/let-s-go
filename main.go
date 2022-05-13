@@ -8,6 +8,7 @@ import (
 
 	"github.com/MUHAMMAD-AKBR/let-s-go/regex"
 	"github.com/MUHAMMAD-AKBR/let-s-go/routes"
+	"github.com/MUHAMMAD-AKBR/let-s-go/structure"
 )
 
 func main() {
@@ -35,7 +36,7 @@ func main() {
 			// and then convert it to string
 			result := regex.Find_int(strings.Join(slice, ""))
 			// each is the struct with the index of the result
-			each := routes.Struct_repo.List_of_data[result]
+			each := structure.Struct_repo.List_of_data[result]
 			// marhsal it into json and get the data
 			byt, _ := json.Marshal(each)
 			fmt.Fprintln(w, string(byt))
@@ -44,7 +45,7 @@ func main() {
 		case "PUT", "PATCH":
 			routes.PUT()
 		case "DELETE":
-			routes.DELETE(routes.Struct_repo.List_of_data, 2)
+			routes.DELETE(structure.Struct_repo.List_of_data, 2)
 		}
 
 	})
