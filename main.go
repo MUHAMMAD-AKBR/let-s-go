@@ -44,7 +44,7 @@ func main() {
 		case "PUT", "PATCH":
 			routes.PUT()
 		case "DELETE":
-			routes.DELETE()
+			routes.DELETE(routes.Struct_repo.List_of_data, 2)
 		}
 
 	})
