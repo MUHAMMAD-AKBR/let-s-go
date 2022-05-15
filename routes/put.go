@@ -11,6 +11,7 @@ import (
 )
 
 func PUT(r *http.Request) {
+	// instance of the new struct
 	instance := structure.Data{}
 	var path = r.URL.Path
 	catch_body := json.NewDecoder(r.Body)
@@ -26,5 +27,7 @@ func PUT(r *http.Request) {
 	// slice_of_string is the right path because it contains a number in the end of the path
 	index := regex.Find_int(strings.Join(slice_of_string, ""))
 	// and then in the slice of struct replace the index reffered to the struct
-	fmt.Println(structure.Struct_repo.List_of_data[index])
+	structure.Struct_repo.List_of_data = append(structure.Struct_repo.List_of_data[:index], structure.Struct_repo.List_of_data[index+1:]...)
+	structure.Struct_repo.List_of_data[index] = instance
+	fmt.Println(structure.Struct_repo.List_of_data)
 }
