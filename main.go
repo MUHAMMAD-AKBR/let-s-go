@@ -42,8 +42,10 @@ func main() {
 			fmt.Fprintln(w, string(byt))
 		case "POST":
 			routes.POST(w, r)
-		case "PUT", "PATCH":
+		case "PUT":
 			routes.PUT(r)
+		case "PATCH":
+			routes.PATCH(r)
 		case "DELETE":
 			routes.DELETE(structure.Struct_repo.List_of_data, 2)
 		}

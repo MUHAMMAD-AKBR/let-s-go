@@ -23,3 +23,11 @@ func Find_int(str string) int {
 	num, _ := strconv.Atoi(strings.Join(result, ""))
 	return num
 }
+
+func Only_letters(str string) []string {
+	expression, err := regexp.Compile(`[a-zA-Z_]+`)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	return expression.FindAllString(str, -1)
+}
