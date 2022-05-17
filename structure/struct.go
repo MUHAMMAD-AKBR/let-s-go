@@ -29,6 +29,7 @@ var Struct_repo = Repo{
 		{Product_name: "pillow", Price: "20", Type_product: "housekeepings"},
 		{Product_name: "bodypillow", Price: "25", Type_product: "housekeepings"},
 		{Product_name: "usb", Price: "30", Type_product: "Electronics"},
+		{Product_name: "glass-cup", Price: "0.5", Type_product: "housekeepings"},
 	},
 }
 

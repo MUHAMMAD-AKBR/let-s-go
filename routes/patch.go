@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 
 func PATCH(r *http.Request) {
 	// instance of struct
+	var pointer *structure.Repo = &structure.Struct_repo
 	var instace_of_struct = structure.Data{}
 	var path = r.URL.Path
 	// this is the function to make the struct iterable
@@ -37,12 +39,30 @@ func PATCH(r *http.Request) {
 			fmt.Println("this is valid")
 		}
 
-		// get the index from url path
-		// test the string first if its the right form like /datas/2 <-- index
-		result, _ := regex.Test_string(path)
-		// get the int finally that is the index
-		final_result := regex.Find_int(strings.Join(result, ""))
-		fmt.Println(final_result)
 	}
+	// get the index from url path
+	// test the string first if its the right form like /datas/2 <-- index
+	result, _ := regex.Test_string(path)
+	// get the int finally that is the index
+	final_result := regex.Find_int(strings.Join(result, ""))
 
+	pointed_item := pointer.List_of_data[final_result]
+	validate_slice_fields := reflect.VisibleFields(reflect.TypeOf(pointed_item))
+
+	for _, v := range validate_slice_fields {
+		if v.Name == filtered_stringified[0] {
+			switch v.Name {
+			case "Price":
+				pointed_item.Price = json.Number(fmt.Sprint(regex.Find_int(stringified)))
+				fmt.Println(pointed_item)
+			case "Type_product":
+				pointed_item.Type_product = strings.Join(filtered_stringified, "")
+				fmt.Println(pointed_item)
+			case "Product_name":
+				pointed_item.Product_name = strings.Join(filtered_stringified, "")
+				fmt.Println(pointed_item)
+			}
+		}
+
+	}
 }
