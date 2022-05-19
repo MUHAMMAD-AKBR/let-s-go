@@ -8,7 +8,7 @@ import (
 // the structure of the data we wan't but this is still in the struct format, we want to marshal it into json later
 type Data struct {
 	Product_name string
-	Price        json.Number
+	Price        string
 	Type_product string
 }
 

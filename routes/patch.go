@@ -1,11 +1,9 @@
 package routes
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"reflect"
 	"strings"
 
 	"github.com/MUHAMMAD-AKBR/let-s-go/regex"
@@ -13,56 +11,37 @@ import (
 )
 
 func PATCH(r *http.Request) {
-	// instance of struct
-	var pointer *structure.Repo = &structure.Struct_repo
-	var instace_of_struct = structure.Data{}
-	var path = r.URL.Path
-	// this is the function to make the struct iterable
-	typeof := reflect.TypeOf(instace_of_struct)
-	// this will return a slice of string than contains the struct names values and so on
-	slice_of_fields := reflect.VisibleFields(typeof)
+	// pointer to the real repo
+	var ptr *structure.Repo = &structure.Struct_repo
 
-	// we read the request body
-	bytes, err := ioutil.ReadAll(r.Body)
+	// read the request body
+	text, _ := ioutil.ReadAll(r.Body)
+
+	// find index
+	slice_of_url_path, err := regex.Test_string(r.URL.Path)
 	if err != nil {
-		fmt.Println("there are no keys provided")
+		fmt.Println("path is not right it should be like localhost:3000/datas/<number>")
 	}
-	// strinigfy the request body and then validate the string using regex to find all the leter and _
-	stringified := string(bytes)
-	// return a slice of string than contains the correct keys of struct on the first index the second index is the value of struct
-	filtered_stringified := regex.Only_letters(stringified)
+	index := regex.Find_int(strings.Join(slice_of_url_path, ""))
 
-	for _, value := range slice_of_fields {
-		// validate if the value name of slice_of_fields if correct
+	// get key_from_text
+	remove_after_colon := regex.Paramater_wants(string(text), `.+:`)
+	remove_exept_key := regex.Paramater_wants(strings.Join(remove_after_colon, ""), `[a-zA-Z_]+`)
+	stringified_value_from_text1 := strings.Join(remove_exept_key, "")
 
-		if value.Name == filtered_stringified[0] {
-			fmt.Println("this is valid")
-		}
+	// get value_from_text
+	remove_before_colon := regex.Paramater_wants(string(text), `:.+`)
+	remove_exept_value := regex.Paramater_wants(strings.Join(remove_before_colon, ""), `[a-zA-Z_0-9]+`)
+	stringified_value_from_txt2 := strings.Join(remove_exept_value, "")
 
-	}
-	// get the index from url path
-	// test the string first if its the right form like /datas/2 <-- index
-	result, _ := regex.Test_string(path)
-	// get the int finally that is the index
-	final_result := regex.Find_int(strings.Join(result, ""))
-
-	pointed_item := pointer.List_of_data[final_result]
-	validate_slice_fields := reflect.VisibleFields(reflect.TypeOf(pointed_item))
-
-	for _, v := range validate_slice_fields {
-		if v.Name == filtered_stringified[0] {
-			switch v.Name {
-			case "Price":
-				pointed_item.Price = json.Number(fmt.Sprint(regex.Find_int(stringified)))
-				fmt.Println(pointed_item)
-			case "Type_product":
-				pointed_item.Type_product = strings.Join(filtered_stringified, "")
-				fmt.Println(pointed_item)
-			case "Product_name":
-				pointed_item.Product_name = strings.Join(filtered_stringified, "")
-				fmt.Println(pointed_item)
-			}
-		}
-
+	if stringified_value_from_text1 == "Product_name" {
+		fmt.Printf("that is a correct key=Product_name! here is the value %v", stringified_value_from_txt2)
+		ptr.List_of_data[index].Product_name = stringified_value_from_txt2
+	} else if stringified_value_from_text1 == "Price" {
+		fmt.Printf("that is a correct key=price! here is the value %v", stringified_value_from_txt2)
+		ptr.List_of_data[index].Price = stringified_value_from_txt2
+	} else if stringified_value_from_text1 == "Type_product" {
+		fmt.Printf("that is a correct key=Type_product! here is the value %v", stringified_value_from_txt2)
+		ptr.List_of_data[index].Type_product = stringified_value_from_txt2
 	}
 }

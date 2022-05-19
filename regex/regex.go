@@ -31,3 +31,8 @@ func Only_letters(str string) []string {
 	}
 	return expression.FindAllString(str, -1)
 }
+
+func Paramater_wants(text string, reg string) []string {
+	expression, _ := regexp.Compile(reg)
+	return expression.FindAllString(text, -1)
+}
