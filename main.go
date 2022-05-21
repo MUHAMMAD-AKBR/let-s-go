@@ -47,7 +47,7 @@ func main() {
 		case "PATCH":
 			routes.PATCH(r)
 		case "DELETE":
-			routes.DELETE(structure.Struct_repo.List_of_data, 2)
+			routes.DELETE(w, r)
 		}
 
 	})
